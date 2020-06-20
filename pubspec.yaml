@@ -34,6 +34,8 @@ dependencies:
   google_fonts : ^0.2.0
   flutter_staggered_grid_view: ^0.3.0
   flutter_icons: ^1.0.0+1
+  fluttertoast: ^4.0.0
+  curved_navigation_bar: ^0.3.3
 
 dev_dependencies:
   flutter_test:
@@ -51,9 +53,29 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/china.jpg
+    - assets/images/pexel.jpeg
+    - assets/images/photo.jpg
+    - assets/images/sunset.jpg
+    - assets/images/fb.png
+    - assets/images/messenger.png
+    - assets/images/page.jpg
+    - assets/images/josh.jpeg
+    - assets/images/julia.jpg
+    - assets/images/kemri.jpg
+    - assets/images/sarah.jpg
+    - assets/images/car1.jpg
+    - assets/images/bookmarks.png
+    - assets/images/events.png
+    - assets/images/friends.png
+    - assets/images/bookmarks.png
+    - assets/images/memories.png
+    - assets/images/multimedia.png
+    - assets/images/localization.png
+    - assets/images/gaming.png
+    - assets/images/jobs.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

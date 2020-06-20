@@ -1,125 +1,82 @@
-/*
-* Crested on 3rd January 2020
-* This material is not for commercial use , only for learning purposes.
-* */
-import 'package:fleva_icons/fleva_icons.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
+// Flutter code sample for BottomNavigationBar
+
+// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
+// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
+// widgets and the [currentIndex] is set to index 0. The selected item is
+// amber. The `_onItemTapped` function changes the selected item's index
+// and displays a corresponding message in the center of the [Scaffold].
+//
+// ![A scaffold with a bottom navigation bar containing three bottom navigation
+// bar items. The first one is selected.](https://flutter.github.io/assets-for-api-docs/assets/material/bottom_navigation_bar.png)
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../main/constants.dart';
-import '../components/app_bar.dart';
-import 'more_screen.dart';
+import '../components/card.dart';
+import '../components/horizontal_list.dart';
+import '../components/HomeFeed.dart';
 
-class FacebookHome extends StatefulWidget {
-  FacebookHome({Key key}) : super(key: key);
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
 
   @override
-  _FacebookHomeState createState() => _FacebookHomeState();
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
-class _FacebookHomeState extends State<FacebookHome> with SingleTickerProviderStateMixin{
-
-  static tab_selected stab = tab_selected.home;
-  
-  
-  TabController _tabController;
-  @override
-  void initState() {
-    _tabController = new TabController(length: 6, vsync: this);
-    super.initState();
-  }
-
-
-   static final fbtabs = <Tab>[
-    Tab(icon: Icon(FlevaIcons.home_outline)),
-    Tab(icon: Icon(FontAwesomeIcons.users, ) ),
-    Tab(icon: Icon(Icons.ondemand_video, )),
-    Tab(icon: Icon(FontAwesomeIcons.flag, )),
-    Tab(icon: Icon(FlevaIcons.bell_outline,)),
-    Tab(icon: Icon(Icons.menu,)),
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  List<Widget> _widgetOptions = <Widget>[
+    CardsDemo(),
+    HorizontalList(),
+    HomeFeed(),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: School',
+      style: optionStyle,
+    ),
   ];
 
-   var fbtabsscreens = <Widget>[
-    FacebookScreenMore(),
-    FacebookScreenMore(),
-    FacebookScreenMore(),
-    FacebookScreenMore(),
-    FacebookScreenMore(),
-    FacebookScreenMore(),
-  ];
 
-  @override
-  void dispose() {
-    super.dispose();
-    _tabController.dispose();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-
-   @override
+  @override
   Widget build(BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('Facebook',style: headStyle,),
-            backgroundColor: Colors.white,
-            elevation: 0.0,
-            actions: <Widget>[
-              AppBarIcon(icon: FontAwesomeIcons.search, onPress: (){
-                print('Current Index: ${DefaultTabController.of(context).index}');
-              }),
-              AppBarIcon(icon: FontAwesomeIcons.facebookMessenger, onPress: (){
-
-              }),
-            ],
-            bottom: TabBar(
-               controller: _tabController,
-                onTap: (int index) {
-                  setState(() {
-                    index == null ? index =0 : index =DefaultTabController.of(context).index;
-                    print("hello $index");
-                    if (index == 0) {
-                      setState(() {
-                        index =0 ;
-                        stab = tab_selected.home;
-                      });
-                    }  else if(index == 1){
-                      setState(() {
-                        index =1;
-                        stab = tab_selected.groups;
-
-                      });
-                    } else if (index == 2) {
-                      stab = tab_selected.video;
-                    }  else if (index == 3) {
-                       stab = tab_selected.flag;
-                    }  else if (index == 4) {
-                       stab = tab_selected.notification;
-                    }  else if (index == 5) {
-                       stab = tab_selected.more;
-                    }
-                  });
-                },
-                dragStartBehavior: DragStartBehavior.start,
-                indicatorColor: facebookbluecolor,
-                indicatorWeight: 1.5,
-                unselectedLabelColor: facebookiconcolor,
-                tabs: fbtabs),
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
           ),
-          body: TabBarView(
-             controller: _tabController,
-              children: fbtabsscreens,
-              physics: NeverScrollableScrollPhysics(),
-
-          ));
-
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            title: Text('Business'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            title: Text('School'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            title: Text('test'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        unselectedItemColor: Colors.blueGrey[200],
+        selectedItemColor: Colors.red[600],
+        onTap: _onItemTapped,
+        backgroundColor: Colors.white,
+      ),
+    );
   }
-}
-
-enum tab_selected{
-  home,
-  groups,
-  video,
-  flag,
-  notification,
-  more
 }

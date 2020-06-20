@@ -11,7 +11,7 @@ class FacebookScreenMore extends StatefulWidget {
 
 class _FacebookScreenMoreState extends State<FacebookScreenMore> {
   List<MoreModel> items = [
-    MoreModel(image: "assets/images/page.jpg", title: "Your 1 Page"),
+    MoreModel(image: "assets/images/page.jpg", title: "Your Page"),
     MoreModel(image: "assets/images/bookmarks.png", title: "Bookmark"),
     MoreModel(image: "assets/images/events.png", title: "Events"),
     MoreModel(image: "assets/images/friends.png", title: "Friends"),
@@ -52,7 +52,7 @@ class _FacebookScreenMoreState extends State<FacebookScreenMore> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Sarah Wanjiru",
+                              "Sohaib",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),

@@ -36,6 +36,7 @@ dependencies:
   flutter_icons: ^1.0.0+1
   fluttertoast: ^4.0.0
   curved_navigation_bar: ^0.3.3
+  flutter_statusbarcolor: ^0.2.3
 
 dev_dependencies:
   flutter_test:

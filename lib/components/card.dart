@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'icon_text.dart';
 
 //const String _kGalleryAssetsPackage = 'flutter_gallery_assets';
 
@@ -44,24 +44,6 @@ const List<TravelDestination> destinations = <TravelDestination>[
     city: 'Thanjavur',
     location: 'Thanjavur, Tamil Nadu',
   ),
-  TravelDestination(
-    assetName: 'assets/images/friends.png',
-    //assetPackage: _kGalleryAssetsPackage,
-    title: 'Artisans of Southern India',
-    description: 'Silk Spinners',
-    city: 'Chettinad',
-    location: 'Sivaganga, Tamil Nadu',
-    type: CardDemoType.tappable,
-  ),
-  TravelDestination(
-    assetName: 'assets/images/friends.png',
-    //assetPackage: _kGalleryAssetsPackage,
-    title: 'Brihadisvara Temple',
-    description: 'Temples',
-    city: 'Thanjavur',
-    location: 'Thanjavur, Tamil Nadu',
-    type: CardDemoType.selectable,
-  ),
 ];
 
 class TravelDestinationItem extends StatelessWidget {
@@ -70,10 +52,11 @@ class TravelDestinationItem extends StatelessWidget {
       super(key: key);
 
   // This height will allow for all the Card's content to fit comfortably within the card.
-  static const double height = 338.0;
+  static const double height = 320.0;
   final TravelDestination destination;
   final ShapeBorder shape;
 
+  @override
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,7 +66,6 @@ class TravelDestinationItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            const SectionTitle(title: 'Normal'),
             SizedBox(
               height: height,
               child: Card(
@@ -100,149 +82,6 @@ class TravelDestinationItem extends StatelessWidget {
   }
 }
 
-class TappableTravelDestinationItem extends StatelessWidget {
-  const TappableTravelDestinationItem({ Key key, @required this.destination, this.shape })
-    : assert(destination != null),
-      super(key: key);
-
-  // This height will allow for all the Card's content to fit comfortably within the card.
-  static const double height = 298.0;
-  final TravelDestination destination;
-  final ShapeBorder shape;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            const SectionTitle(title: 'Tappable'),
-            SizedBox(
-              height: height,
-              child: Card(
-                // This ensures that the Card's children (including the ink splash) are clipped correctly.
-                clipBehavior: Clip.antiAlias,
-                shape: shape,
-                child: InkWell(
-                  onTap: () {
-                    print('Card was tapped');
-                  },
-                  // Generally, material cards use onSurface with 12% opacity for the pressed state.
-                  splashColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
-                  // Generally, material cards do not have a highlight overlay.
-                  highlightColor: Colors.transparent,
-                  child: TravelDestinationContent(destination: destination),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SelectableTravelDestinationItem extends StatefulWidget {
-  const SelectableTravelDestinationItem({ Key key, @required this.destination, this.shape })
-    : assert(destination != null),
-      super(key: key);
-
-  final TravelDestination destination;
-  final ShapeBorder shape;
-
-  @override
-  _SelectableTravelDestinationItemState createState() => _SelectableTravelDestinationItemState();
-}
-
-class _SelectableTravelDestinationItemState extends State<SelectableTravelDestinationItem> {
-
-  // This height will allow for all the Card's content to fit comfortably within the card.
-  static const double height = 298.0;
-  bool _isSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            const SectionTitle(title: 'Selectable (long press)'),
-            SizedBox(
-              height: height,
-              child: Card(
-                // This ensures that the Card's children (including the ink splash) are clipped correctly.
-                clipBehavior: Clip.antiAlias,
-                shape: widget.shape,
-                child: InkWell(
-                  onLongPress: () {
-                    print('Selectable card state changed');
-                    setState(() {
-                      _isSelected = !_isSelected;
-                    });
-                  },
-                  // Generally, material cards use onSurface with 12% opacity for the pressed state.
-                  splashColor: colorScheme.onSurface.withOpacity(0.12),
-                  // Generally, material cards do not have a highlight overlay.
-                  highlightColor: Colors.transparent,
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        color: _isSelected
-                          // Generally, material cards use primary with 8% opacity for the selected state.
-                          // See: https://material.io/design/interaction/states.html#anatomy
-                          ? colorScheme.primary.withOpacity(0.08)
-                          : Colors.transparent,
-                      ),
-                      TravelDestinationContent(destination: widget.destination),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.check_circle,
-                            color: _isSelected ? colorScheme.primary : Colors.transparent,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SectionTitle extends StatelessWidget {
-  const SectionTitle({
-    Key key,
-    this.title,
-  }) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 12.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(title, style: Theme.of(context).textTheme.subtitle1),
-      ),
-    );
-  }
-}
 
 class TravelDestinationContent extends StatelessWidget {
   const TravelDestinationContent({ Key key, @required this.destination })
@@ -254,15 +93,14 @@ class TravelDestinationContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final TextStyle titleStyle = theme.textTheme.headline5.copyWith(color: Colors.white);
     final TextStyle descriptionStyle = theme.textTheme.subtitle1;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // Photo and title.
+        // Photo.
         SizedBox(
-          height: 184.0,
+          height: 180.0,
           child: Stack(
             children: <Widget>[
               Positioned.fill(
@@ -271,27 +109,15 @@ class TravelDestinationContent extends StatelessWidget {
                 // of the Material and display ink effects above it. Using a
                 // standard Image will obscure the ink splash.
                 child: Ink.image(
-                  image: AssetImage(destination.assetName,),
+                  image: AssetImage(destinations[0].assetName,),
                   fit: BoxFit.cover,
                   child: Container(),
-                ),
-              ),
-              Positioned(
-                bottom: 16.0,
-                left: 16.0,
-                right: 16.0,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    destination.title,
-                    style: titleStyle,
-                  ),
                 ),
               ),
             ],
           ),
         ),
+        
         // Description and share/explore buttons.
         Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
@@ -302,15 +128,15 @@ class TravelDestinationContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                
                 // three line description
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     destination.description,
-                    style: descriptionStyle.copyWith(color: Colors.black54),
+                    style: descriptionStyle.copyWith(color: Colors.red),
                   ),
                 ),
-                Text(destination.city),
                 Text(destination.location),
               ],
             ),
@@ -321,16 +147,11 @@ class TravelDestinationContent extends StatelessWidget {
           ButtonBar(
             alignment: MainAxisAlignment.start,
             children: <Widget>[
-              FlatButton(
-                child: Text('SHARE', semanticsLabel: 'Share ${destination.title}'),
-                textColor: Colors.amber.shade500,
-                onPressed: () { print('pressed'); },
-              ),
-              FlatButton(
-                child: Text('EXPLORE', semanticsLabel: 'Explore ${destination.title}'),
-                textColor: Colors.amber.shade500,
-                onPressed: () { print('pressed'); },
-              ),
+              Expanded(child: IconText(tStyle: TextStyle(fontWeight: FontWeight.bold), icon: Icons.location_on, text: "Live", color: Colors.white, ccolor: Colors.red,)),
+              Container(height: 30,width: 1,color: Colors.grey,),
+              Expanded(child: IconText(tStyle: TextStyle(fontWeight: FontWeight.bold), icon: Icons.location_on, text: "Photo", color: Colors.white, ccolor: Colors.greenAccent,)),
+              Container(height: 25,width: 1,color: Colors.grey,),
+              Expanded(child: IconText(tStyle: TextStyle(fontWeight: FontWeight.bold), icon: Icons.location_on, text: "Live", color: Colors.white, ccolor: Colors.pink,)),
             ],
           ),
       ],
@@ -350,30 +171,11 @@ class _CardsDemoState extends State<CardsDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Scrollbar(
-        child: ListView(
-          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-          children: destinations.map<Widget>((TravelDestination destination) {
-            Widget child;
-            switch (destination.type) {
-              case CardDemoType.standard:
-                child = TravelDestinationItem(destination: destination, shape: _shape);
-                break;
-              case CardDemoType.tappable:
-                child = TappableTravelDestinationItem(destination: destination, shape: _shape);
-                break;
-              case CardDemoType.selectable:
-                child = SelectableTravelDestinationItem(destination: destination, shape: _shape);
-                break;
-            }
-            return Container(
-              margin: const EdgeInsets.only(bottom: 8.0),
-              child: child,
-            );
-          }).toList(),
-        ),
-      ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+      child: TravelDestinationItem(destination: destinations[0], shape: _shape),
     );
   }
 }
+
+

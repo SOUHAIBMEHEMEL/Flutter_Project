@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import '../components/card.dart';
 import '../components/horizontal_list.dart';
 import '../components/HomeFeed.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key}) : super(key: key);
@@ -48,6 +49,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
